@@ -1,17 +1,18 @@
 package jaxrs;
 
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
-import javax.ws.rs.Produces;
+import jdbc.DB;
+
+import javax.inject.Inject;
+import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import java.util.Collections;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 
-@Path("/test")
+@Path("/")
 public class Index {
+
+    @Inject
+    private DB db;
 
     @GET
     @Path("/{id}")
@@ -20,5 +21,12 @@ public class Index {
         Objects.requireNonNull(id);
         Map map = Collections.singletonMap("id", id);
         return Response.ok(map).build();
+    }
+
+    @GET
+    @Path("/deps")
+    public Response deps(){
+        List<Map<String, Object>> d = db.list("SELECT * FROM deps");
+        return Response.ok(d).build();
     }
 }
