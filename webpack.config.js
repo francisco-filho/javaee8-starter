@@ -38,7 +38,10 @@ const webpackConfig = {
     hot: true,
     inline: true,
     historyApiFallback: true,
-    contentBase: path.join(__dirname, '/public')
+    contentBase: path.join(__dirname, '/public'),
+    proxy: {
+      '/javaee8/api/*': 'http://localhost:8080/'
+    }
   }
 }
 
