@@ -2,6 +2,7 @@ package jaxrs;
 
 import jdbc.DB;
 
+import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
@@ -11,7 +12,7 @@ import java.util.*;
 @Path("/")
 public class Index {
 
-    @Inject
+    @Inject @RequestScoped
     private DB db;
 
     @GET

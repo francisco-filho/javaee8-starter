@@ -30,7 +30,6 @@ public class PersistenceConfiguration {
     }
 
     @Produces
-    @RequestScoped
     public DB db(){
         return new DB(defaultDS);
     }
