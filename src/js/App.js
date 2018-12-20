@@ -33,6 +33,21 @@ class MyIndex extends React.Component {
             .then(value => this.setState({ id: value.id }));
     }
 
+    uploadFile(){
+        let data = new FormData();
+        let file = this.file.files[0];
+        data.append('descricao', this.desc.value)
+        data.append('myfile', file)
+        console.info('file', file);
+
+        fetch("/javaee8/api/upload", {
+            method: 'POST',
+            body: data
+        })
+        .then(resp => resp.json())
+        .then(value => this.setState({ id: value }));
+    }
+
     render(){
        return (
            <div>
@@ -43,6 +58,11 @@ class MyIndex extends React.Component {
                    </li>
                </ul>
                <p>o id é {this.state.id}</p>
+               <form>
+                   <input type="text" name="descricao" id="descricaoId" ref={ desc => this.desc = desc}/>
+                   <input type="file" name="myfile" id="myFileId" ref={ file => this.file = file}/>
+                   <a onClick={e => this.uploadFile() }>upload</a>
+               </form>
            </div>
        )
     }
