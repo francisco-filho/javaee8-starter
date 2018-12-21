@@ -7,13 +7,19 @@ import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
 import org.glassfish.jersey.media.multipart.FormDataParam;
 
 import javax.enterprise.context.RequestScoped;
-import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import java.io.File;
+import java.io.IOException;
 import java.io.InputStream;
-import java.util.*;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 import java.util.logging.Logger;
 
 @Path("/")
@@ -28,6 +34,21 @@ public class Index {
     @Inject
     private Logger log;
 
+    public void saveImage(){
+        java.nio.file.Path p = Paths.get("c:\\tmp\\foto-nova.jpg");
+        try {
+            db.executeUpdate("INSERT INTO public.usuario (nome, foto) VALUES (?, ?)",
+                    "nome", Files.readAllBytes(p)
+            );
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public Map<String, Object> getImage(){
+        Map<String, Object> u = db.first("select * from usuario where id = 1").get();
+        return u;
+    }
 
     @POST
     @Path("/upload")
@@ -37,9 +58,21 @@ public class Index {
             @FormDataParam("myfile") FormDataContentDisposition fcd,
             @FormDataParam("descricao") String desc
             ){
+        Files.copy
         String fileName = fcd.getFileName();
         log.info(desc);
         return Response.ok(Boolean.TRUE).build();
+    }
+
+    @GET
+    @Path("/download")
+    @Produces(MediaType.APPLICATION_OCTET_STREAM)
+    public Response download(){
+        Map<String, Object> image = getImage();
+        byte[] bytes = (byte[])image.get("foto");
+        Response.ResponseBuilder resp = Response.ok(bytes);
+        resp.header("Content-Disposition","attachment; filename=\""+ image.get("nome") +"\"");
+        return resp.build();
     }
 
     @GET
@@ -48,14 +81,17 @@ public class Index {
     public Response index(@PathParam("id") Integer id){
         Objects.requireNonNull(id);
         Map map = Collections.singletonMap("id", id);
+
+        saveImage();
+
         return Response.ok(map).build();
     }
 
     @GET
     @Path("/deps")
     public Response deps(){
-        List<Map<String, Object>> d = db.list("SELECT * FROM deps");
-        return Response.ok(d).build();
+        //List<Map<String, Object>> d = db.list("SELECT * FROM deps");
+        return Response.ok().build();
     }
 
     @GET

@@ -3,9 +3,11 @@ package jdbc;
 import javax.sql.DataSource;
 import java.sql.*;
 import java.util.*;
+import java.util.logging.Logger;
 
 public class DB {
 
+    private Logger log = Logger.getLogger(this.getClass().getName());
     private DataSource dataSource;
 
     public DB(DataSource ds){
@@ -24,7 +26,8 @@ public class DB {
 
             if (rs.next()) {
                 Map<String, Object> map = new LinkedHashMap<>();
-                for (int i = 1; i <= params.length; i++) {
+                for (int i = 1; i <= columnCount; i++) {
+                    log.info("" + rsm.getColumnType(i) + "->" + rsm.getColumnName(i));
                     map.put(rsm.getColumnName(i), rs.getObject(i));
                 }
                 return Optional.of(map);
@@ -65,7 +68,11 @@ public class DB {
         try (Connection conn = dataSource.getConnection()) {
             PreparedStatement stmt = conn.prepareStatement(sql);
             for (int i = 1; i <= params.length; i++) {
-                stmt.setObject(i, params[i-1]);
+                if (params[i-1] instanceof byte[]){
+                    stmt.setBytes(i, (byte[])params[i-1] );
+                } else {
+                    stmt.setObject(i, params[i-1]);
+                }
             }
             return stmt.executeUpdate();
         } catch (SQLException e) {
