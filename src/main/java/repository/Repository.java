@@ -1,6 +1,7 @@
 package repository;
 
 import java.util.List;
+import java.util.Map;
 
 public interface Repository<T, K> {
     T findOne(K key);
@@ -11,4 +12,6 @@ public interface Repository<T, K> {
     void update(T value);
 
     boolean delete(K key);
+
+    List<T> query(Map<String, Object> params);
 }

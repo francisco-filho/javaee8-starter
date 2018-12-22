@@ -9,11 +9,13 @@ import javax.inject.Named;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @Named
+@JDBC
 @ApplicationScoped
-public class AplicacaoRepositoryJdbc implements Repository<Aplicacao, Integer> {
+public class AplicacaoRepositoryJdbc implements AplicacaoRepository {
 
     @Inject
     private DB db;
@@ -57,5 +59,10 @@ public class AplicacaoRepositoryJdbc implements Repository<Aplicacao, Integer> {
     @Override
     public boolean delete(Integer key) {
         return db.executeUpdate("DELETE FROM db2acs.appl WHERE cd_appl=?", key) > 0;
+    }
+
+    @Override
+    public List<Aplicacao> query(Map<String, Object> params) {
+        return null;
     }
 }

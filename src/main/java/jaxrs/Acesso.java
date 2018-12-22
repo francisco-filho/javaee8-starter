@@ -1,7 +1,7 @@
 package jaxrs;
 
 import entities.Aplicacao;
-import repository.AplicacaoRepositoryJdbc;
+import repository.*;
 
 import javax.inject.Inject;
 import javax.ws.rs.*;
@@ -11,8 +11,8 @@ import java.net.URI;
 @Path("/acesso")
 public class Acesso {
 
-    @Inject
-    AplicacaoRepositoryJdbc apps;
+    @Inject @JPA
+    AplicacaoRepository apps;
 
     @GET
     @Path("/app/{id}")
