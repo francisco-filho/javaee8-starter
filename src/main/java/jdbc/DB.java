@@ -83,11 +83,18 @@ public class DB {
     public int insertAndReturnId(String sql, Object... params){
         try (Connection conn = dataSource.getConnection()) {
             PreparedStatement stmt = conn.prepareStatement(sql);
+            for (int i = 1; i <= params.length; i++) {
+                if (params[i-1] instanceof byte[]){
+                    stmt.setBytes(i, (byte[])params[i-1] );
+                } else {
+                    stmt.setObject(i, params[i-1]);
+                }
+            }
             ResultSet rs = stmt.executeQuery();
             rs.next();
             return rs.getInt(1);
         } catch (SQLException e) {
-            throw new RuntimeException(e.getNextException());
+            throw new RuntimeException(e);
         }
     }
 
