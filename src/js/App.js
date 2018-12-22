@@ -1,8 +1,10 @@
 import React from "react";
 import "whatwg-fetch";
-import { Router, Link} from '@reach/router'
+import {Link, Router} from '@reach/router'
 import {AuthContext} from "./main";
-import AplicacaoForm from "./forms/AplicacaoForm";
+import AplicacaoLista from "./aplicacao/AplicacaoLista";
+import AplicacaoForm from "./aplicacao/AplicacaoForm";
+import {get} from './util/http'
 
 export default class App extends React.Component {
     state = {
@@ -10,8 +12,7 @@ export default class App extends React.Component {
     }
 
     componentDidMount() {
-        fetch("/javaee8/api/auth", {method: "GET"})
-            .then(resp => resp.json())
+        get("/javaee8/api/auth")
             .then(usuario => {
                 setTimeout(() => this.setState({auth: true}), 100)
                 window.usuario = usuario
@@ -23,12 +24,14 @@ export default class App extends React.Component {
       const comp = this.state.auth ? <div>
           <nav>
               <Link to="/">Index</Link>
+              <Link to="/acesso/app/1">app 1</Link>
               <Link to="/detalhes/93829">Detalhes</Link>
           </nav>
           <hr/>
           <div className="content">
              <Router>
-                 <AplicacaoForm path="/"/>
+                 <AplicacaoLista path="/"></AplicacaoLista>
+                 <AplicacaoForm path="/acesso/app/:id"/>
                  <MyIndex path="/myindex" usuario={this.props.usuario}/>
                  <Detalhe path="/detalhes/:itemId/*" usuario={this.props.usuario}/>
              </Router>

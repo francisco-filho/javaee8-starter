@@ -1,8 +1,8 @@
 package jaxrs;
 
 import entities.Aplicacao;
-import jdbc.CondicaoWhere;
-import repository.*;
+import repository.AplicacaoRepository;
+import repository.JPA;
 
 import javax.inject.Inject;
 import javax.ws.rs.*;
@@ -13,7 +13,7 @@ import java.util.List;
 @Path("/acesso")
 public class Acesso {
 
-    @Inject @JDBC
+    @Inject @JPA
     AplicacaoRepository apps;
 
     @GET
@@ -30,13 +30,13 @@ public class Acesso {
 //                .with("nome", "like", "Ac%")
 //                .orderBy("id")
 //                .build();
-        CondicaoWhere c = CondicaoWhere.builder()
-                .with("cd_appl", 2)
-                .with("tx_dsc_appl", "like", "%ac%")
-                .orderBy("cd_appl")
-                .build();
+//        CondicaoWhere c = CondicaoWhere.builder()
+//                .with("cd_appl", 2)
+//                .with("tx_dsc_appl", "like", "%ac%")
+//                .orderBy("cd_appl")
+//                .build();
 
-        List<Aplicacao> qa = apps.query(c);
+        List<Aplicacao> qa = apps.findAll();
         return Response.ok(qa).build();
     }
 

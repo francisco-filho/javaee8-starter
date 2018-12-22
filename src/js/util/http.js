@@ -33,7 +33,7 @@ export function del(url, options){
 }
 
 function rawfetch(url, options = { }){
-    const headers = {'Content-Type': 'application/json'}
+    const headers = {'Content-Type': 'application/json', 'Accept': 'application/json'}
     const mergedOptions = { headers: headers, ...options,body: JSON.stringify(options.body) }
     console.log(mergedOptions)
     return fetch(url, mergedOptions)

@@ -1,7 +1,6 @@
 package repository;
 
 import entities.Aplicacao;
-import jdbc.Condicao;
 import jdbc.CondicaoWhere;
 import jdbc.DB;
 
@@ -10,7 +9,6 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;

@@ -6,9 +6,9 @@ const webpackConfig = {
     app: ['@babel/polyfill', 'react-hot-loader/patch', path.join(__dirname, '/src/js/main.js') ]
   },
    output: {
-    path: path.join(__dirname, 'public'),
+    path: path.join(__dirname, 'src/main/webapp/public'),
     filename: '[name].js',
-    publicPath: '/'
+    publicPath: '/public/'
   },
   module: {
     rules:[
@@ -38,7 +38,7 @@ const webpackConfig = {
     hot: true,
     inline: true,
     historyApiFallback: true,
-    contentBase: path.join(__dirname, '/public'),
+    contentBase: path.join(__dirname, 'src/main/webapp/public'),
     proxy: {
       '/javaee8/api/*': 'http://localhost:8080/'
     }

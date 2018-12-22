@@ -4,6 +4,7 @@ import { AppContainer } from "react-hot-loader";
 import App from "./App";
 import "./style.scss";
 import 'whatwg-fetch'
+import {get} from './util/http'
 
 export const AuthContext = React.createContext('auth');
 
@@ -19,8 +20,7 @@ const render = (Component, usuario) => {
 };
 
 
-fetch("/javaee8/api/auth", { method: "GET" })
-    .then(resp => resp.json())
+get("/javaee8/api/auth")
     .then(usuario => {
         window.usuario = usuario;
         render(App, usuario);
