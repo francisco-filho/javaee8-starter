@@ -12,6 +12,7 @@
     "@reach/router": "^1.2.1",
     "react": "^16.6.3",
     "react-dom": "^16.6.3",
+    "react-transition-group": "^2.5.2",
     "whatwg-fetch": "^3.0.0"
   },
   "devDependencies": {
