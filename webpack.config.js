@@ -1,5 +1,8 @@
 const path = require('path')
 const webpack  = require('webpack')
+const HtmlWebpackPlugin = require('html-webpack-plugin')
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const devMode = process.env.NODE_ENV !== 'production'
 
 const webpackConfig = {
   entry: {
@@ -8,7 +11,7 @@ const webpackConfig = {
    output: {
     path: path.join(__dirname, 'src/main/webapp/public'),
     filename: '[name].js',
-    publicPath: '/'
+    publicPath: '/javaee8'
   },
   module: {
     rules:[
@@ -20,7 +23,11 @@ const webpackConfig = {
       {
         test: /\.scss$/,
         include: [path.join(__dirname, 'src', 'js')],
-        use: ['style-loader','css-loader', 'sass-loader']
+        use: [{
+          loader: devMode ? 'style-loader' : MiniCssExtractPlugin.loader
+        },
+        'css-loader', 'sass-loader'
+        ]
       }
     ]
   },
@@ -28,6 +35,13 @@ const webpackConfig = {
     new webpack.HotModuleReplacementPlugin(),
     new webpack.NamedModulesPlugin(),
     new webpack.NoEmitOnErrorsPlugin(),
+    new HtmlWebpackPlugin({
+      title: 'javaee8',
+      template: path.join(__dirname, 'src', 'js', 'index.template.html')
+    }),
+    new MiniCssExtractPlugin({
+      filename: "[name].css"
+    })
   ],
   resolve: {
     modules: ['node_modules'],
