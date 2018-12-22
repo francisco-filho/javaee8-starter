@@ -3,6 +3,7 @@ import {get, post, put, del} from '../util/http'
 
 export default class AplicacaoForm extends Component {
     state = {
+        loading: true,
         app: {
             nome: '',
             descricao: ''
@@ -28,15 +29,15 @@ export default class AplicacaoForm extends Component {
     componentDidMount() {
         console.log('AplicacaoForm:componentDidMount', this.props)
         get('/javaee8/api/acesso/app/' + this.props.id).then( app=> {
-            this.setState({app})
+            this.setState({app, loading: false})
         })
         .catch((error) => console.error('HTTP ERROR: ', error))
     }
 
     render(){
         console.log('AplicacaoForm::render')
-        const { app } = this.state
-        return <div>
+        const { app, loading } = this.state
+        return  !loading && <div>
             <h1>Aplicação</h1>
             <form>
                 <div className="form-field">
@@ -52,4 +53,5 @@ export default class AplicacaoForm extends Component {
         </div>
     }
 }
+
 

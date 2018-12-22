@@ -8,7 +8,7 @@ const webpackConfig = {
    output: {
     path: path.join(__dirname, 'src/main/webapp/public'),
     filename: '[name].js',
-    publicPath: '/public/'
+    publicPath: '/'
   },
   module: {
     rules:[

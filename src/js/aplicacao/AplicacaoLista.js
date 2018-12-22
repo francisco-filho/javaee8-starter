@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
 import {get} from '../util/http'
 import {Link} from "@reach/router";
+import {Location, Router} from "@reach/router";
 
 export default class AplicacaoLista extends Component {
     state = {

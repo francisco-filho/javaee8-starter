@@ -1,10 +1,11 @@
 import React from "react";
 import "whatwg-fetch";
-import {Link, Router} from '@reach/router'
+import {Link, Location, Router} from '@reach/router'
 import {AuthContext} from "./main";
 import AplicacaoLista from "./aplicacao/AplicacaoLista";
 import AplicacaoForm from "./aplicacao/AplicacaoForm";
 import {get} from './util/http'
+import { TransitionGroup, CSSTransition } from "react-transition-group";
 
 export default class App extends React.Component {
     state = {
@@ -31,7 +32,7 @@ export default class App extends React.Component {
           <div className="content">
              <Router>
                  <AplicacaoLista path="/"></AplicacaoLista>
-                 <AplicacaoForm path="/acesso/app/:id"/>
+                     <AplicacaoForm path="/acesso/app/:id"/>
                  <MyIndex path="/myindex" usuario={this.props.usuario}/>
                  <Detalhe path="/detalhes/:itemId/*" usuario={this.props.usuario}/>
              </Router>
@@ -119,3 +120,17 @@ const Detalhe = (props) => (
 
 const Detalhe1 = ({usuario}) => <h1>Detalhe 1 {usuario.chave}</h1>
 const Detalhe2 = () => <h1>Detalhe 2</h1>
+
+const FadeTransitionRouter = props => (
+    <Location>
+        {({ location }) => (
+            <TransitionGroup className="transition-group">
+                <CSSTransition key={location.key} classNames="fade" timeout={500}>
+                    <Router location={location} className="router">
+                        {props.children}
+                    </Router>
+                </CSSTransition>
+            </TransitionGroup>
+        )}
+    </Location>
+);
