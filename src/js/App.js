@@ -2,6 +2,7 @@ import React from "react";
 import "whatwg-fetch";
 import { Router, Link} from '@reach/router'
 import {AuthContext} from "./main";
+import AplicacaoForm from "./forms/AplicacaoForm";
 
 export default class App extends React.Component {
     state = {
@@ -27,7 +28,8 @@ export default class App extends React.Component {
           <hr/>
           <div className="content">
              <Router>
-                 <MyIndex path="/" usuario={this.props.usuario}/>
+                 <AplicacaoForm path="/"/>
+                 <MyIndex path="/myindex" usuario={this.props.usuario}/>
                  <Detalhe path="/detalhes/:itemId/*" usuario={this.props.usuario}/>
              </Router>
           </div>
