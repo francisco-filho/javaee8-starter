@@ -21,7 +21,7 @@ public class HistoryApiFallback implements Filter {
     private static final String REENTRANCY_KEY = HistoryApiFallback.class.getName();
 
     protected static String FORWARD_PATH_CONFIG_PARAMETER = "forwardPath";
-    protected static String forwardPath = "/javaee8/public/index.html";
+    protected static String forwardPath = "/index.template.html";
 
     /** */
     private boolean isGet(String method) {

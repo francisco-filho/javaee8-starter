@@ -6,6 +6,7 @@ import AplicacaoLista from "./aplicacao/AplicacaoLista";
 import AplicacaoForm from "./aplicacao/AplicacaoForm";
 import {get} from './util/http'
 import { TransitionGroup, CSSTransition } from "react-transition-group";
+import './style.scss'
 
 export default class App extends React.Component {
     state = {
@@ -24,15 +25,15 @@ export default class App extends React.Component {
         console.log('app props', this.props)
       const comp = this.state.auth ? <div>
           <nav>
-              <Link to="/">Index</Link>
-              <Link to="/acesso/app/1">app 1</Link>
-              <Link to="/detalhes/93829">Detalhes</Link>
+              <Link to="/javaee8/">Index</Link>
+              <Link to="/javaee8/acesso/app/1">app 1</Link>
+              <Link to="/javaee8/detalhes/93829">Detalhes</Link>
           </nav>
           <hr/>
           <div className="content">
-             <Router>
+             <Router basepath="/javaee8">
                  <AplicacaoLista path="/"></AplicacaoLista>
-                     <AplicacaoForm path="/acesso/app/:id"/>
+                 <AplicacaoForm path="/acesso/app/:id"/>
                  <MyIndex path="/myindex" usuario={this.props.usuario}/>
                  <Detalhe path="/detalhes/:itemId/*" usuario={this.props.usuario}/>
              </Router>
@@ -106,8 +107,8 @@ const Detalhe = (props) => (
         <hr/>
         <p>{props.itemId}</p>
         <nav>
-            <Link to="detalhe1">Detalhe 1</Link>
-            <Link to="detalhe2">Detalhe 2</Link>
+            <Link to="/javaee8/detalhe1">Detalhe 1</Link>
+            <Link to="/javaee8/detalhe2">Detalhe 2</Link>
         </nav>
         <div>
             <Router>

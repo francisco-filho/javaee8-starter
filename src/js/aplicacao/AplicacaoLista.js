@@ -31,7 +31,7 @@ export default class AplicacaoLista extends Component {
                    apps.map( app => {
                        return <tr key={app.id}>
                            <td>{app.id}</td>
-                           <td><Link to={`acesso/app/${app.id}`}>{app.nome}</Link></td>
+                           <td><Link to={`/javaee8/acesso/app/${app.id}`}>{app.nome}</Link></td>
                            <td>{app.descricao}</td>
                        </tr>
                    })
