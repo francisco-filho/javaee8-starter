@@ -3,12 +3,14 @@ package repository;
 import entities.Aplicacao;
 import jdbc.DB;
 
-import javax.ejb.Stateless;
+import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
+import javax.inject.Named;
 import java.util.List;
 import java.util.Optional;
 
-@Stateless
+@Named
+@ApplicationScoped
 public class AplicacaoRepositoryJdbc implements Repository<Aplicacao, Integer> {
 
     @Inject
