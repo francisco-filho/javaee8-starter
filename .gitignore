@@ -3,3 +3,4 @@ node_modules/
 target/
 out/
 *.iml
+src/main/webapp/public/app.*
