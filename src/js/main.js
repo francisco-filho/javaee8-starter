@@ -3,20 +3,31 @@ import ReactDOM from "react-dom";
 import { AppContainer } from "react-hot-loader";
 import App from "./App";
 import "./style.scss";
+import 'whatwg-fetch'
 
-const render = Component => {
+export const AuthContext = React.createContext('auth');
+
+const render = (Component, usuario) => {
   ReactDOM.render(
     <AppContainer>
-      <Component />
+        <AuthContext.Provider value='hello context'>
+          <Component usuario={usuario}/>
+        </AuthContext.Provider>
     </AppContainer>,
     document.getElementById("main")
   );
 };
 
-render(App);
 
-if (module.hot) {
-  module.hot.accept("./App", () => {
-    render(App);
-  });
-}
+fetch("/javaee8/api/auth", { method: "GET" })
+    .then(resp => resp.json())
+    .then(usuario => {
+        window.usuario = usuario;
+        render(App, usuario);
+
+        if (module.hot) {
+            module.hot.accept("./App", () => {
+                render(App, usuario);
+            });
+        }
+    });

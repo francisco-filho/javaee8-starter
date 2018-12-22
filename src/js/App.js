@@ -1,11 +1,25 @@
 import React from "react";
 import "whatwg-fetch";
 import { Router, Link} from '@reach/router'
+import {AuthContext} from "./main";
 
 export default class App extends React.Component {
+    state = {
+        auth: false
+    }
+
+    componentDidMount() {
+        fetch("/javaee8/api/auth", {method: "GET"})
+            .then(resp => resp.json())
+            .then(usuario => {
+                setTimeout(() => this.setState({auth: true}), 100)
+                window.usuario = usuario
+            })
+    }
+
   render() {
-    return (
-      <div>
+        console.log('app props', this.props)
+      const comp = this.state.auth ? <div>
           <nav>
               <Link to="/">Index</Link>
               <Link to="/detalhes/93829">Detalhes</Link>
@@ -13,23 +27,31 @@ export default class App extends React.Component {
           <hr/>
           <div className="content">
              <Router>
-                 <MyIndex path="/"/>
-                 <Detalhe path="/detalhes/:itemId/*"/>
+                 <MyIndex path="/" usuario={this.props.usuario}/>
+                 <Detalhe path="/detalhes/:itemId/*" usuario={this.props.usuario}/>
              </Router>
           </div>
-      </div>
-    );
+      </div> : <span>Waitng</span>
+    return comp;
   }
 }
 
+
 class MyIndex extends React.Component {
+  static contextType = AuthContext;
     state = {
         id: null
     };
 
     mostrarAlerta() {
-        fetch("/javaee8/api/938", { method: "GET" })
-            .then(resp => resp.json())
+        fetch("/javaee8/api/redirect", { method: "GET" })
+            .then(resp => {
+                if (resp.redirected){
+                    window.location = resp.url
+                    return
+                }
+                return resp.json()
+            })
             .then(value => this.setState({ id: value.id }));
     }
 
@@ -49,6 +71,8 @@ class MyIndex extends React.Component {
     }
 
     render(){
+        console.log('context', this.context)
+        console.log('my props', this.props)
        return (
            <div>
                <h1>Index</h1>
@@ -57,7 +81,7 @@ class MyIndex extends React.Component {
                        <button onClick={e => this.mostrarAlerta()}>Mostrar alerta com ID</button>
                    </li>
                </ul>
-               <p>o id é {this.state.id}</p>
+               <p>{this.props.usuario.chave} o id é {this.state.id}</p>
                <form>
                    <input type="text" name="descricao" id="descricaoId" ref={ desc => this.desc = desc}/>
                    <input type="file" name="myfile" id="myFileId" ref={ file => this.file = file}/>
@@ -67,6 +91,8 @@ class MyIndex extends React.Component {
        )
     }
 }
+
+MyIndex.contextType = AuthContext;
 
 const Detalhe = (props) => (
     <div>
@@ -79,12 +105,12 @@ const Detalhe = (props) => (
         </nav>
         <div>
             <Router>
-                <Detalhe1 path="detalhe1"/>
+                <Detalhe1 path="detalhe1" usuario={props.usuario}/>
                 <Detalhe2 path="detalhe2"/>
             </Router>
         </div>
     </div>
 )
 
-const Detalhe1 = () => <h1>Detalhe 1</h1>
+const Detalhe1 = ({usuario}) => <h1>Detalhe 1 {usuario.chave}</h1>
 const Detalhe2 = () => <h1>Detalhe 2</h1>
