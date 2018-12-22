@@ -13,7 +13,7 @@ import java.util.List;
 @Path("/acesso")
 public class Acesso {
 
-    @Inject @JPA
+    @Inject @JDBC
     AplicacaoRepository apps;
 
     @GET
@@ -25,13 +25,18 @@ public class Acesso {
     @GET
     @Path("/app")
     public Response getAllApps(){
+//        CondicaoWhere c = CondicaoWhere.builder()
+//                .with("id", 2)
+//                .with("nome", "like", "Ac%")
+//                .orderBy("id")
+//                .build();
         CondicaoWhere c = CondicaoWhere.builder()
-                .with("id", 2)
-                .with("nome", "like", "Ac%")
-                .orderBy("id")
+                .with("cd_appl", 2)
+                .with("tx_dsc_appl", "like", "%ac%")
+                .orderBy("cd_appl")
                 .build();
 
-        List<Aplicacao> qa = apps.query(c, "id");
+        List<Aplicacao> qa = apps.query(c);
         return Response.ok(qa).build();
     }
 

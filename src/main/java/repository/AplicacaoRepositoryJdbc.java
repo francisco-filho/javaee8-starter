@@ -10,7 +10,9 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @Named
@@ -63,23 +65,15 @@ public class AplicacaoRepositoryJdbc implements AplicacaoRepository {
     }
 
     @Override
-    public List<Aplicacao> query(CondicaoWhere map, String order) {
-        StringBuilder baseQuery = new StringBuilder("SELECT * FROM DB2ACS.APPL\n");
+    public List<Aplicacao> query(CondicaoWhere map) {
+        Map<String, Object> nq = buildNativeQuery("SELECT a.* FROM db2acs.appl a", map);
+        String sql = (String)nq.get("sql");
+        Object p1 = nq.get("params");
         Object[] params = null;
-        if (map != null && map.size() > 0) {
-            params = new Object[map.size()];
-            baseQuery.append("WHERE\n");
-            int i = 0;
-            for (Condicao e : map.getCondicoes()) {
-                baseQuery.append(String.format("%s %s ?\n", e.chave, e.sinal));
-                params[i++] = e.valor;
-            }
+        if (p1 != null){
+           params = (Object[]) p1;
         }
-        if (order != null)
-            baseQuery.append("ORDER BY cd_appl");
-        String q = baseQuery.toString();
-
-        return db.queryForList(q, Aplicacao.class, (rs, i) -> {
+        return db.queryForList(sql, Aplicacao.class, (rs, i) -> {
             return aplicacaoFromResultset(rs);
         }, params);
     }

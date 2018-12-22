@@ -21,6 +21,10 @@ public class CondicaoWhere {
         return condicoes;
     }
 
+    public String getOrdem() {
+        return order;
+    }
+
     public static class CondicaoWhereBuilder {
         List<Condicao> condicoes = new ArrayList<>();
         String order = null;

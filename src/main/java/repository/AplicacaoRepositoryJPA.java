@@ -51,35 +51,8 @@ public class AplicacaoRepositoryJPA implements AplicacaoRepository{
     }
 
     @Override
-    public List<Aplicacao> query(CondicaoWhere map, String order) {
-        CriteriaBuilder criteriaBuilder = em.getCriteriaBuilder();
-        CriteriaQuery<Object> cq = criteriaBuilder.createQuery();
-        Root<Aplicacao> from = cq.from(Aplicacao.class);
-        CriteriaQuery<Object> selectQuery = cq.select(from);
-
-        if (map != null && map.size() > 0) {
-            List<Predicate> predicates = new ArrayList<>();
-            for (Condicao e : map.getCondicoes()) {
-                if ("=".equals(e.sinal))
-                    predicates.add(criteriaBuilder.and(criteriaBuilder.equal(from.get(e.chave), e.valor)));
-                else if (">".equals(e.sinal)) {
-                    predicates.add(criteriaBuilder.greaterThan(from.get(e.chave), (Integer)e.valor));
-                } else if ("like".equals(e.sinal)) {
-                    predicates.add(criteriaBuilder.and(criteriaBuilder.like(from.get(e.chave), (String)e.valor)));
-                }
-            }
-            Predicate all = criteriaBuilder.conjunction();
-            for (Predicate p : predicates) {
-                all = criteriaBuilder.and(all, p);
-            }
-            selectQuery.where(all);
-        }
-        if (order != null){
-            selectQuery.orderBy(criteriaBuilder.asc(from.get(order)));
-        }
-        TypedQuery tq = em.createQuery(selectQuery);
-
+    public List<Aplicacao> query(CondicaoWhere map) {
+        TypedQuery tq = buildTypedQuery(Aplicacao.class, em, map);
         return tq.getResultList();
     }
-
 }
