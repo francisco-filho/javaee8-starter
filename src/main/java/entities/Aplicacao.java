@@ -1,9 +1,11 @@
 package entities;
 
+import javax.json.bind.annotation.JsonbPropertyOrder;
 import javax.persistence.*;
 
 @Entity
 @Table(schema = "DB2ACS", name = "APPL")
+@JsonbPropertyOrder({"id", "nome", "descricao"})
 public class Aplicacao {
     @Id
     @GeneratedValue
