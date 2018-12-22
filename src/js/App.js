@@ -107,8 +107,8 @@ const Detalhe = (props) => (
         <hr/>
         <p>{props.itemId}</p>
         <nav>
-            <Link to="/javaee8/detalhe1">Detalhe 1</Link>
-            <Link to="/javaee8/detalhe2">Detalhe 2</Link>
+            <Link to="detalhe1">Detalhe 1</Link>
+            <Link to="detalhe2">Detalhe 2</Link>
         </nav>
         <div>
             <Router>
