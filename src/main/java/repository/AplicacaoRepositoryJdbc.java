@@ -1,6 +1,8 @@
 package repository;
 
 import entities.Aplicacao;
+import jdbc.Condicao;
+import jdbc.CondicaoWhere;
 import jdbc.DB;
 
 import javax.enterprise.context.ApplicationScoped;
@@ -9,7 +11,6 @@ import javax.inject.Named;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 
 @Named
@@ -62,7 +63,24 @@ public class AplicacaoRepositoryJdbc implements AplicacaoRepository {
     }
 
     @Override
-    public List<Aplicacao> query(Map<String, Object> params) {
-        return null;
+    public List<Aplicacao> query(CondicaoWhere map, String order) {
+        StringBuilder baseQuery = new StringBuilder("SELECT * FROM DB2ACS.APPL\n");
+        Object[] params = null;
+        if (map != null && map.size() > 0) {
+            params = new Object[map.size()];
+            baseQuery.append("WHERE\n");
+            int i = 0;
+            for (Condicao e : map.getCondicoes()) {
+                baseQuery.append(String.format("%s %s ?\n", e.chave, e.sinal));
+                params[i++] = e.valor;
+            }
+        }
+        if (order != null)
+            baseQuery.append("ORDER BY cd_appl");
+        String q = baseQuery.toString();
+
+        return db.queryForList(q, Aplicacao.class, (rs, i) -> {
+            return aplicacaoFromResultset(rs);
+        }, params);
     }
 }

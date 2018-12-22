@@ -1,12 +1,14 @@
 package jaxrs;
 
 import entities.Aplicacao;
+import jdbc.CondicaoWhere;
 import repository.*;
 
 import javax.inject.Inject;
 import javax.ws.rs.*;
 import javax.ws.rs.core.Response;
 import java.net.URI;
+import java.util.List;
 
 @Path("/acesso")
 public class Acesso {
@@ -23,7 +25,14 @@ public class Acesso {
     @GET
     @Path("/app")
     public Response getAllApps(){
-       return Response.ok(apps.findAll()).build();
+        CondicaoWhere c = CondicaoWhere.builder()
+                .with("id", 2)
+                .with("nome", "like", "Ac%")
+                .orderBy("id")
+                .build();
+
+        List<Aplicacao> qa = apps.query(c, "id");
+        return Response.ok(qa).build();
     }
 
     @POST
