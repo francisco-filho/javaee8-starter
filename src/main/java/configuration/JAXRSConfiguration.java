@@ -1,5 +1,6 @@
 package configuration;
 
+import jaxrs.Acesso;
 import jaxrs.Index;
 import org.glassfish.jersey.media.multipart.MultiPartFeature;
 
@@ -15,6 +16,7 @@ public class JAXRSConfiguration extends Application {
         Set<Class<?>> resources = new HashSet<>();
         resources.add(MultiPartFeature.class);
         resources.add(Index.class);
+        resources.add(Acesso.class);
         return resources;
     }
 }
