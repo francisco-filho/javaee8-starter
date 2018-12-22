@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import {get, post} from '../util/http'
+import {get, post, put, del} from '../util/http'
 
 export default class AplicacaoForm extends Component {
     state = {
@@ -13,11 +13,16 @@ export default class AplicacaoForm extends Component {
 
     onHandleDescriptionChange = (e) => {
         const app = this.state.app
-        this.setState({app: {...app, description: e.target.value }})
+        this.setState({app: {...app, descricao: e.target.value }})
     }
 
     save = () => {
-       console.log(this.state.app)
+        let app = this.state.app
+        app.id = 4 // simulando update
+        app = null
+        del(`/javaee8/api/acesso/app/${4}`, { }).then( resp => {
+            console.log(resp)
+        })
     }
 
     componentDidMount() {

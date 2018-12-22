@@ -13,17 +13,30 @@ export function get(url, payload = false, options = {}){
         }
         url = url + queryString
     }
+    options.method = 'GET'
     return rawfetch(url, options)
 }
 
 export function post(url, options){
     let mergeOptions = {...options, method: 'POST'}
-    return rawfetch(url, options)
+    return rawfetch(url, mergeOptions)
 }
 
-function rawfetch(url, options = {}){
-    const method = options.method || 'GET'
-    return fetch(url, { method })
+export function put(url, options){
+    let mergeOptions = {...options, method: 'PUT'}
+    return rawfetch(url, mergeOptions)
+}
+
+export function del(url, options){
+    let mergeOptions = {...options, method: 'DELETE'}
+    return rawfetch(url, mergeOptions)
+}
+
+function rawfetch(url, options = { }){
+    const headers = {'Content-Type': 'application/json'}
+    const mergedOptions = { headers: headers, ...options,body: JSON.stringify(options.body) }
+    console.log(mergedOptions)
+    return fetch(url, mergedOptions)
         .then(resp => {
             if (!resp.ok){
                 throw {status: resp.status, statusText: resp.statusText}
