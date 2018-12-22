@@ -8,16 +8,17 @@ import org.glassfish.jersey.media.multipart.FormDataParam;
 
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
+import javax.servlet.http.HttpSession;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Collections;
-import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.logging.Logger;
@@ -25,14 +26,22 @@ import java.util.logging.Logger;
 @Path("/")
 public class Index {
 
+    private Logger log = Logger.getLogger(this.getClass().getName());
+
     @Inject @RequestScoped
     private DB db;
 
     @Inject @Auto
-    private Usuario ux;
+    private Usuario user;
 
     @Inject
-    private Logger log;
+    private HttpSession session;
+
+    @GET
+    @Path("/auth")
+    public Response auth(){
+        return Response.ok(session.getAttribute("usuario")).build();
+    }
 
     public void saveImage(){
         java.nio.file.Path p = Paths.get("c:\\tmp\\foto-nova.jpg");
@@ -43,6 +52,13 @@ public class Index {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    @GET
+    @Path("/redirect")
+    public Response redirectMe() throws URISyntaxException {
+        URI uri = new URI("http://localhost:3000/detalhes/999");
+        return Response.temporaryRedirect(uri).build();
     }
 
     public Map<String, Object> getImage(){
@@ -58,7 +74,6 @@ public class Index {
             @FormDataParam("myfile") FormDataContentDisposition fcd,
             @FormDataParam("descricao") String desc
             ){
-        Files.copy
         String fileName = fcd.getFileName();
         log.info(desc);
         return Response.ok(Boolean.TRUE).build();
@@ -103,6 +118,6 @@ public class Index {
     @GET
     @Path("/getusuario")
     public Response getUsuario(){
-        return Response.ok(ux.getNome()).build();
+        return Response.ok(user.getNome()).build();
     }
 }
