@@ -1,20 +1,63 @@
 package jaxrs;
 
+import com.google.common.io.ByteStreams;
 import entities.Aplicacao;
+import jdbc.DB;
+import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
+import org.glassfish.jersey.media.multipart.FormDataParam;
 import repository.AplicacaoRepository;
 import repository.JPA;
 
 import javax.inject.Inject;
 import javax.ws.rs.*;
+import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import java.io.IOException;
+import java.io.InputStream;
 import java.net.URI;
 import java.util.List;
+import java.util.Map;
+import java.util.logging.Logger;
 
 @Path("/acesso")
 public class Acesso {
 
+    private Logger log = Logger.getLogger(this.getClass().getName());
+
     @Inject @JPA
     AplicacaoRepository apps;
+
+    @Inject
+    DB db;
+
+    @POST
+    @Path("/upload")
+    @Consumes(MediaType.MULTIPART_FORM_DATA)
+    public Response upload(
+            @FormDataParam("foto") InputStream fis,
+            @FormDataParam("foto") FormDataContentDisposition fcd,
+            @FormDataParam("id") Integer id
+            //@FormDataParam("file") FormDataBodyPart body FOR MULTIPLE FILES
+    ){
+        try {
+            db.executeUpdate("UPDATE db2acs.appl SET BL_FOTO = ? WHERE cd_appl= ?", ByteStreams.toByteArray(fis), id
+            );
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        return Response.ok(Boolean.TRUE).build();
+    }
+
+    @GET
+    @Path("/download/{id}")
+    @Produces(MediaType.APPLICATION_OCTET_STREAM)
+    public Response download(@PathParam("id") Integer id){
+        Map<String, Object> image = db.first("SELECT bl_foto FROM db2acs.appl WHERE cd_appl = ?", id).get();
+        byte[] bytes = (byte[])image.get("bl_foto");
+        Response.ResponseBuilder resp = Response.ok(bytes);
+        resp.header("Content-Disposition","attachment; filename=\""+ "minha-imagem.jpg" +"\"");
+        return resp.build();
+    }
 
     @GET
     @Path("/app/{id}")

@@ -38,6 +38,10 @@ public class HistoryApiFallback implements Filter {
         return header.contains("application/json");
     }
 
+    private boolean isApi(String uri) {
+        return uri.contains("/api/");
+    }
+
     /** */
     private boolean acceptsHtml(String header) {
         return header.contains("text/html") || header.contains("*/*");
@@ -65,6 +69,7 @@ public class HistoryApiFallback implements Filter {
         boolean doFilter = false;
 
         if (reentrancyKey != null ||
+                isApi(requestURI) ||
                 !isGet(method) ||
                 !hasHeader(accept) ||
                 isApplicationJson(accept) ||

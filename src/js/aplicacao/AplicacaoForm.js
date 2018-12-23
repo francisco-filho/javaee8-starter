@@ -20,9 +20,24 @@ export default class AplicacaoForm extends Component {
         this.setState({app: {...app, descricao: e.target.value }})
     }
 
+    onHandleFileChange = (e) => {
+        const app = this.state.app
+        this.setState({app: {...app, foto: e.target.files[0]}})
+    }
+
     save = () => {
-        get(`/javaee8/acesso/app/${this.props.id}`, { }).then( app=> {
-            this.setState({app})
+        const {app} = this.state
+        // get(`/javaee8/acesso/app/${this.props.id}`, { }).then( app=> {
+        //     this.setState({app})
+        // })
+        const body = new FormData()
+        body.append('id', app.id)
+        body.append('nome', app.nome)
+        body.append('descricao', app.descricao)
+        body.append('foto', app.foto)
+        console.log(body)
+        post('/javaee8/api/acesso/upload', { body, blob: true}).then( resp => {
+           console.log('resp', resp)
         })
     }
 
@@ -48,7 +63,14 @@ export default class AplicacaoForm extends Component {
                     <label>Descrição</label>
                     <input type="text" onChange={this.onHandleDescriptionChange} value={app.descricao}/>
                 </div>
+                <div className="form-field">
+                    <label>Arquivo</label>
+                    <input type="file" onChange={this.onHandleFileChange} value={app.file}/>
+                </div>
             </form>
+            <p>
+                <a href="/javaee8/api/acesso/download/1">Download</a>
+            </p>
             <button onClick={this.save}>Salvar</button>
         </div>
     }

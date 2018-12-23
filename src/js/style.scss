@@ -1,5 +1,54 @@
 body {
-  h1 {
-    background-color: green;
+  padding: 0;
+  margin: 0;
+
+  ul, li, h1, h2, h3 {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+  }
+
+  #main-nav {
+    display: flex;
+    justify-content: space-between;
+
+    background-color: #23569c;
+
+    .logo {
+      display: flex;
+      img {
+        width: 32px;
+        height: 32px;
+      }
+    }
+
+
+    .perfil {
+      position: relative;
+      width: 32px;
+      height: 32px;
+      text-align: center;
+      ul {
+        position: absolute;
+        top: 0;
+        right: 0;
+        display: none;
+      }
+      li {
+        background-color: #fff;
+        border-bottom: 1px solid #ccc;
+        transition: background-color .2s;
+
+        &:hover {
+          background-color: #f8f8f8;
+          transition: background-color .2s;
+        }
+      }
+    }
+    .perfil:hover {
+      ul {
+        display: block;
+      }
+    }
   }
 }
