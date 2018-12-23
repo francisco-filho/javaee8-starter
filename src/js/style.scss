@@ -2,9 +2,12 @@
 @import "~primereact/resources/primereact.min.css";
 @import "~primeicons/primeicons.css";
 
+@import "~roboto-fontface/css/roboto/roboto-fontface.css";
+
 body {
   padding: 0;
   margin: 0;
+  font-family: Roboto;
 
   ul, li, h1, h2, h3 {
     padding: 0;
@@ -15,8 +18,8 @@ body {
   #main-nav {
     display: flex;
     justify-content: space-between;
-
     background-color: #23569c;
+    color: #fff;
 
     .logo {
       display: flex;
@@ -31,6 +34,11 @@ body {
       width: 32px;
       height: 32px;
       text-align: center;
+
+      &:hover {
+        background-color: #204987;
+      }
+
       ul {
         position: absolute;
         top: 100%;
