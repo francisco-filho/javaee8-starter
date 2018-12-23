@@ -25,7 +25,7 @@ const webpackConfig = {
         include: [path.join(__dirname, "src", "js")]
       },
       {
-        test: /\.scss$/,
+        test: /\.s?css$/,
         include: [path.join(__dirname, "src", "js")],
         use: [
           {
@@ -33,6 +33,30 @@ const webpackConfig = {
           },
           "css-loader",
           "sass-loader"
+        ]
+      },
+      {
+        test: /\.(woff(2)?|ttf|eot|svg)(\?v=\d+\.\d+\.\d+)?$/,
+        use: [
+          {
+            loader: "file-loader",
+            options: {
+              name: "[name].[ext]",
+              outputPath: "fonts/"
+            }
+          }
+        ]
+      },
+      {
+        test: /\.(gif|jpg|jpeg|png)(\?v=\d+\.\d+\.\d+)?$/,
+        use: [
+          {
+            loader: "file-loader",
+            options: {
+              name: "[name].[ext]",
+              outputPath: "fonts/"
+            }
+          }
         ]
       }
     ]
