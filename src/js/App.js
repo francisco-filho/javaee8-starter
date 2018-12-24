@@ -6,8 +6,10 @@ import AplicacaoLista from "./aplicacao/AplicacaoLista";
 import AplicacaoForm from "./aplicacao/AplicacaoForm";
 import { get } from "./util/http";
 import { TransitionGroup, CSSTransition } from "react-transition-group";
-import BarraNavegacao from "./BarraNavegacao";
+import BarraNavegacao from "./componentes/BarraNavegacao";
 import "./style.scss";
+
+export const contexto = link => `/javaee8${link}`;
 
 export default class App extends React.Component {
   state = {
@@ -25,13 +27,13 @@ export default class App extends React.Component {
     console.log("app props", this.props);
     const comp = this.state.auth ? (
       <div>
-        <BarraNavegacao />
-        <div>
+        <BarraNavegacao sistema="Sistema de Controle de Acessos" />
+        <div style={{ display: "none" }}>
           <Link to="/javaee8/">Index</Link>
           <Link to="/javaee8/acesso/app/1">app 1</Link>
           <Link to="/javaee8/detalhes/93829">Detalhes</Link>
         </div>
-        <div className="content">
+        <div className="content" style={{ display: "none" }}>
           <Router basepath="/javaee8">
             <AplicacaoLista path="/" />
             <AplicacaoForm path="/acesso/app/:id" />
