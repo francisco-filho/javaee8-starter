@@ -42,7 +42,7 @@ const webpackConfig = {
             loader: "file-loader",
             options: {
               name: "[name].[ext]",
-              outputPath: "/fonts/"
+              outputPath: "fonts/"
             }
           }
         ]
@@ -54,7 +54,7 @@ const webpackConfig = {
             loader: "file-loader",
             options: {
               name: "[name].[ext]",
-              outputPath: "/fonts/"
+              outputPath: "fonts/"
             }
           }
         ]
