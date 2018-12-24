@@ -6,33 +6,8 @@ import AplicacaoLista from "./aplicacao/AplicacaoLista";
 import AplicacaoForm from "./aplicacao/AplicacaoForm";
 import { get } from "./util/http";
 import { TransitionGroup, CSSTransition } from "react-transition-group";
+import BarraNavegacao from "./BarraNavegacao";
 import "./style.scss";
-
-class BarraNavegacao extends React.Component {
-  render() {
-    return (
-      <nav id="main-nav">
-        <div className="logo">
-          <img src="/javaee8/images/img.jpg" />
-          <h1>
-            Contadoria <i className="pi pi-check" />
-          </h1>
-        </div>
-        <div className="perfil">
-          <div>{"\u2601"}</div>
-          <ul>
-            <li>
-              <a>Editar</a>
-            </li>
-            <li>
-              <a>Sair</a>
-            </li>
-          </ul>
-        </div>
-      </nav>
-    );
-  }
-}
 
 export default class App extends React.Component {
   state = {
@@ -51,12 +26,11 @@ export default class App extends React.Component {
     const comp = this.state.auth ? (
       <div>
         <BarraNavegacao />
-        <nav>
+        <div>
           <Link to="/javaee8/">Index</Link>
           <Link to="/javaee8/acesso/app/1">app 1</Link>
           <Link to="/javaee8/detalhes/93829">Detalhes</Link>
-        </nav>
-        <hr />
+        </div>
         <div className="content">
           <Router basepath="/javaee8">
             <AplicacaoLista path="/" />
