@@ -33,14 +33,12 @@ export default class App extends React.Component {
           <Link to="/javaee8/acesso/app/1">app 1</Link>
           <Link to="/javaee8/detalhes/93829">Detalhes</Link>
         </div>
-        <div className="content" style={{ display: "none" }}>
-          <Router basepath="/javaee8">
-            <AplicacaoLista path="/" />
-            <AplicacaoForm path="/acesso/app/:id" />
-            <MyIndex path="/myindex" usuario={this.props.usuario} />
-            <Detalhe path="/detalhes/:itemId/*" usuario={this.props.usuario} />
-          </Router>
-        </div>
+        <Router basepath="/javaee8">
+          <AplicacaoLista path="/" />
+          <AplicacaoForm path="/acesso/app/:id" />
+          <MyIndex path="/myindex" usuario={this.props.usuario} />
+          <Detalhe path="/detalhes/:itemId/*" usuario={this.props.usuario} />
+        </Router>
       </div>
     ) : (
       <span>Waitng</span>
