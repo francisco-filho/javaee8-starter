@@ -14,7 +14,9 @@ class BarraNavegacao extends React.Component {
       <nav id="main-nav">
         <div className="logo">
           <img src="/javaee8/images/img.jpg" />
-          <h1>Contadoria</h1>
+          <h1>
+            Contadoria <i className="pi pi-check" />
+          </h1>
         </div>
         <div className="perfil">
           <div>{"\u2601"}</div>

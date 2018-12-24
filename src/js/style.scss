@@ -18,8 +18,11 @@ body {
   #main-nav {
     display: flex;
     justify-content: space-between;
-    background-color: #23569c;
-    color: #fff;
+    //background-color: #23569c;
+    background-color: #fff;
+    color: #444;
+    border-bottom: 1px solid #ccc;
+    padding: 10px;
 
     .logo {
       display: flex;
