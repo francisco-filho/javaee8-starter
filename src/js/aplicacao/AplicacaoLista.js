@@ -4,6 +4,7 @@ import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
 import { navigate } from "@reach/router";
 import { Button } from "primereact/button";
+import AreaTitulo from "../componentes/AreaTitulo";
 
 export default class AplicacaoLista extends Component {
   state = {
@@ -20,12 +21,9 @@ export default class AplicacaoLista extends Component {
     const { apps } = this.state;
     return (
       <div>
-        <div className="titulo-area">
-          <div>
-            <h1>Aplicações</h1>
-            <Button label="Nova aplicação" />
-          </div>
-        </div>
+        <AreaTitulo titulo="Aplicações">
+          <Button label="Nova aplicação" />
+        </AreaTitulo>
         <div className="content">
           <DataTable
             value={apps}
@@ -56,6 +54,3 @@ export default class AplicacaoLista extends Component {
     );
   }
 }
-
-let paginatorLeft = <Button icon="pi pi-refresh" />;
-let paginatorRight = <Button icon="pi pi-cloud-upload" />;

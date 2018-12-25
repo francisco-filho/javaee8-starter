@@ -3,6 +3,7 @@ import { get, post, put, del } from "../util/http";
 import { Button } from "primereact/button";
 import { InputText } from "primereact/inputtext";
 import { InputTextarea } from "primereact/inputtextarea";
+import AreaTitulo from "../componentes/AreaTitulo";
 
 export default class AplicacaoForm extends Component {
   state = {
@@ -59,38 +60,42 @@ export default class AplicacaoForm extends Component {
     return (
       !loading && (
         <div>
-          <h1>Aplicação</h1>
-          <form>
-            <div className="form-field">
-              <label>Nome</label>
-              <InputText
-                type="text"
-                placeholder="nome da aplicação"
-                onChange={this.onHandleNameChange}
-                value={app.nome}
-              />
-            </div>
-            <div className="form-field">
-              <label>Descrição</label>
-              <InputTextarea
-                type="text"
-                onChange={this.onHandleDescriptionChange}
-                value={app.descricao}
-              />
-            </div>
-            <div className="form-field">
-              <label>Arquivo</label>
-              <input
-                type="file"
-                onChange={this.onHandleFileChange}
-                value={app.file}
-              />
-            </div>
-          </form>
-          <p>
-            <a href="/javaee8/api/acesso/download/1">Download</a>
-          </p>
-          <Button onClick={this.save} label="Salvar" />
+          <AreaTitulo titulo="Editar aplicação">
+            <Button onClick={this.save} label="Salvar" />
+            <Button
+              onClick={this.save}
+              label="Cancelar"
+              className="p-button-secondary p-button-raised"
+            />
+          </AreaTitulo>
+          <div className="content">
+            <form>
+              <div className="form-field">
+                <label>Nome da aplicação</label>
+                <InputText
+                  type="text"
+                  onChange={this.onHandleNameChange}
+                  value={app.nome}
+                />
+              </div>
+              <div className="form-field">
+                <label>Descrição</label>
+                <InputTextarea
+                  type="text"
+                  onChange={this.onHandleDescriptionChange}
+                  value={app.descricao}
+                />
+              </div>
+              <div className="form-field">
+                <label>Arquivo</label>
+                <input
+                  type="file"
+                  onChange={this.onHandleFileChange}
+                  value={app.file}
+                />
+              </div>
+            </form>
+          </div>
         </div>
       )
     );
