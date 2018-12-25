@@ -1,12 +1,15 @@
-package jaxrs;
+package api;
 
 import com.google.common.io.ByteStreams;
 import entities.Aplicacao;
+import entities.Papel;
+import jdbc.CondicaoWhere;
 import jdbc.DB;
 import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
 import org.glassfish.jersey.media.multipart.FormDataParam;
 import repository.acesso.AplicacaoRepository;
 import repository.Jpa;
+import repository.acesso.PapelRepository;
 
 import javax.inject.Inject;
 import javax.transaction.Transactional;
@@ -28,7 +31,8 @@ public class Acesso {
 
     @Inject @Jpa
     AplicacaoRepository apps;
-
+    @Inject
+    PapelRepository papeis;
     @Inject
     DB db;
 
@@ -105,5 +109,20 @@ public class Acesso {
     public Response deleteApp(@PathParam("id") Integer id) {
         apps.delete(id);
         return Response.ok().build();
+    }
+
+    /**
+     * API de papeis
+     */
+    @GET
+    @Path("/app/{id}/papel")
+    @Transactional
+    public Response getPapeis(@PathParam("id") Integer id){
+        CondicaoWhere condicao = CondicaoWhere.builder()
+                .with("cdApp", id)
+                .build();
+
+        List<Papel> p = papeis.query(condicao);
+        return Response.ok(p).build();
     }
 }

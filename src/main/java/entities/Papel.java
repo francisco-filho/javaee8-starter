@@ -1,6 +1,8 @@
 package entities;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "papl", schema = "db2acs")
@@ -12,10 +14,14 @@ public class Papel {
     private Integer cdPapel;
     @Column(name="cd_appl")
     private Integer cdApp;
-    @Column(name="nm_appl")
+    @Column(name="nm_papl")
     private String nome;
-    @Column(name="tx_dcr_appl")
+    @Column(name="tx_dcr_papl")
     private String descricao;
+
+    @OneToMany
+    @JoinColumn(name = "cd_papl", referencedColumnName = "cd_papl")
+    private List<Permissao> permissoes = new ArrayList<>();
 
     public Integer getCdPapel() {
         return cdPapel;
@@ -47,5 +53,13 @@ public class Papel {
 
     public void setDescricao(String descricao) {
         this.descricao = descricao;
+    }
+
+    public List<Permissao> getPermissoes() {
+        return permissoes;
+    }
+
+    public void setPermissoes(List<Permissao> permissoes) {
+        this.permissoes = permissoes;
     }
 }

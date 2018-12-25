@@ -1,7 +1,7 @@
 package configuration;
 
-import jaxrs.Acesso;
-import jaxrs.Index;
+import api.Acesso;
+import api.Index;
 import org.glassfish.jersey.media.multipart.MultiPartFeature;
 
 import javax.ws.rs.ApplicationPath;

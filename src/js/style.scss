@@ -25,15 +25,20 @@ body {
 
 }
 
-.content {
-  width: 1000px;
-  margin: 0 auto;
+.content, .fluid-content {
   padding: 8px;
   background-color: #fff;
   box-shadow: 0 0 0 1px rgba(61,70,79,.05), 0 1px 3px 0 rgba(61,70,79,.15)
 }
 
+.content {
+  width: 1000px;
+  margin: 0 auto;
+}
 
+.fluid-content {
+  margin: 8px;
+}
 
 body .content .p-datatable .p-datatable-thead>tr{
   &>th {
@@ -98,5 +103,47 @@ body form {
     border-color: #80bdff;
     outline: 0;
     box-shadow: 0 0 0 0.2rem rgba(0,123,255,.25);
+  }
+}
+
+
+/* papeis e permissoes */
+.papeis-permissoes {
+  display: flex;
+
+  .papeis {
+    width: 300px;
+  }
+  .permissoes {
+    flex: 1;
+  }
+
+  .papel {
+    font-size: 12px;
+    border: 1px solid #ddd;
+    border-bottom: none;
+    padding: 8px;
+
+    &:last-of-type {
+      border-bottom: 1px solid #ddd;
+    }
+
+    &:hover {
+      background-color: #e8e8e8;
+      transition: background-color .4s;
+      cursor: pointer;
+    }
+
+    .nome {
+      font-weight: bold;
+    }
+    .descricao {
+      font-weight: normal;
+      color: #222;
+    }
+  }
+
+  .permissao {
+    display: flex;
   }
 }

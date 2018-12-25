@@ -119,12 +119,14 @@ export default class AplicacaoForm extends Component {
                 />
               </div>
               <div className="form-field">
-                <Button
-                  onClick={this.save}
-                  label="Permissões"
-                  className="p-button-success"
-                  icon="pi pi-key"
-                />
+                {this.props.id && (
+                  <Button
+                    onClick={this.save}
+                    label="Permissões"
+                    className="p-button-success"
+                    icon="pi pi-key"
+                  />
+                )}
               </div>
             </form>
           </div>

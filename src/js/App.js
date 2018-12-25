@@ -8,6 +8,7 @@ import { get } from "./util/http";
 import { TransitionGroup, CSSTransition } from "react-transition-group";
 import BarraNavegacao from "./componentes/BarraNavegacao";
 import "./style.scss";
+import PapelForm from "./aplicacao/PapelForm";
 
 export const contexto = link => `/javaee8${link}`;
 
@@ -37,6 +38,7 @@ export default class App extends React.Component {
           <AplicacaoLista path="/acesso" />
           <AplicacaoForm path="/acesso/app/novo" />
           <AplicacaoForm path="/acesso/app/:id" />
+          <PapelForm path="/acesso/app/:id/papel" />
           <MyIndex path="/myindex" usuario={this.props.usuario} />
           <Detalhe path="/detalhes/:itemId/*" usuario={this.props.usuario} />
         </Router>

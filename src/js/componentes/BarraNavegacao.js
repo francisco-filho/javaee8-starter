@@ -6,7 +6,7 @@ import "./BarraNavegacao.scss";
 import { navigate } from "@reach/router";
 
 export default class BarraNavegacao extends React.Component {
-  irParaPaginaInicial = () => navigate(contexto("/"));
+  irParaPaginaInicial = () => navigate(contexto("/acesso"));
 
   render() {
     const { sistema } = this.props;

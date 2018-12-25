@@ -2,7 +2,6 @@ package repository.acesso;
 
 import entities.Papel;
 import jdbc.CondicaoWhere;
-import repository.Jpa;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
@@ -11,7 +10,6 @@ import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 import java.util.List;
 
-@Jpa
 @Named
 @ApplicationScoped
 public class PapelRepositoryJpa implements PapelRepository{

@@ -1,4 +1,4 @@
-package jaxrs;
+package api;
 
 import configuration.Auto;
 import entities.Usuario;
