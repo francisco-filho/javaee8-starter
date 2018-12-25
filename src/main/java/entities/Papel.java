@@ -6,6 +6,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "papl", schema = "db2acs")
+@Cacheable(false)
 public class Papel {
     @Id
     @SequenceGenerator(name="papl_seq", sequenceName = "db2acs.papl_cd_papl_seq")

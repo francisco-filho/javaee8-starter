@@ -5,12 +5,14 @@ import AreaTitulo from "../componentes/AreaTitulo";
 import { contexto } from "../App";
 import { Growl } from "primereact/growl";
 import { Link, navigate } from "@reach/router";
+import { Dialog } from "primereact/dialog";
 
 export default class PapelForm extends Component {
   state = {
     loading: true,
     papeis: [],
-    papelAtivo: 0
+    papelAtivo: 0,
+    visible: false
   };
   handlePapelClick = (cdPapel, e) => {
     this.setState({ papelAtivo: cdPapel });
@@ -63,6 +65,22 @@ export default class PapelForm extends Component {
     return (
       !loading && (
         <div>
+          <Dialog
+            header="Godfather I"
+            visible={this.state.visible}
+            style={{ width: "50vw" }}
+            modal={true}
+            onHide={e => this.setState({ visible: false })}
+          >
+            The story begins as Don Vito Corleone, the head of a New York Mafia
+            family, oversees his daughter's wedding. His beloved son Michael has
+            just come home from the war, but does not intend to become part of
+            his father's business. Through Michael's life the nature of the
+            family business becomes clear. The business of the family is just
+            like the head of the family, kind and benevolent to those who give
+            respect, but given to ruthless violence whenever anything stands
+            against the good of the family.
+          </Dialog>
           <Growl ref={el => (this.growl = el)} />
           <AreaTitulo titulo="Papeis e Permissões" fluida={true}>
             <Link to={contexto("/acesso")}>
@@ -75,9 +93,16 @@ export default class PapelForm extends Component {
           <div className="sidebar-content">
             <div className="papeis">
               <div className="papel-titulo">
-                <i className="pi pi-cog" /> Papeis
+                <span>
+                  <i className="pi pi-cog" /> Papeis
+                </span>
+                <Button
+                  icon="pi pi-plus"
+                  className="p-button-primary p-button-raised"
+                  onClick={e => this.setState({ visible: true })}
+                />
               </div>
-              <div>
+              <div className="lista-papeis">
                 {papeis.map(p => (
                   <div
                     key={p.cdPapel}
@@ -88,10 +113,8 @@ export default class PapelForm extends Component {
                   >
                     <div>
                       <div className="nome">
-                        <span>
-                          <i className="pi pi-key" />
-                          {p.nome}
-                        </span>
+                        <i className="pi pi-key" />
+                        <span>{p.nome}</span>
                       </div>
                       <div className="descricao">
                         <span>{p.descricao}</span>

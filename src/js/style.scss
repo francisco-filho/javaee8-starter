@@ -24,6 +24,10 @@ body {
     font-size: 24px;
   }
 
+  &.p-overflow-hidden {
+    position: relative !important;
+  }
+
 }
 
 .content, .fluid-content {
@@ -117,9 +121,12 @@ body form {
     width: 300px;
     background-color: #f8f9fa;
     font-size: 12px;
-    padding-top: 16px;
     border-right: 1px solid #ddd;
-    height: calc(100vh - 110px);
+
+    .lista-papeis {
+      height: calc(100vh - 140px);
+      overflow-y: auto;
+    }
 
     i {
       display: inline-block;
@@ -151,15 +158,20 @@ body form {
       .descricao {
         font-weight: normal;
         color: #222;
+        padding-left: 15px;
       }
     }
 
     .papel-titulo {
       display: flex;
+      justify-content: space-between;
       align-items: center;
       color: rgb(52, 108, 176);
       font-weight: bold;
-      padding-left: 8px;
+      padding: 8px;
+      button {
+        border-radius: 100%;
+      }
     }
   }
   .permissoes {
