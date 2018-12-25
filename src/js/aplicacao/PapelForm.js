@@ -64,7 +64,7 @@ export default class PapelForm extends Component {
       !loading && (
         <div>
           <Growl ref={el => (this.growl = el)} />
-          <AreaTitulo titulo="Papeis e Permissões">
+          <AreaTitulo titulo="Papeis e Permissões" fluida={true}>
             <Link to={contexto("/acesso")}>
               <Button
                 label="Voltar"
@@ -72,33 +72,45 @@ export default class PapelForm extends Component {
               />
             </Link>
           </AreaTitulo>
-          <div className="fluid-content">
-            <div className="papeis-permissoes">
-              <div className="papeis">
-                <h2>Papeis</h2>
-                <div>
-                  {papeis.map(p => (
-                    <div
-                      className="papel"
-                      onClick={e => this.handlePapelClick(p.cdPapel, e)}
-                    >
+          <div className="sidebar-content">
+            <div className="papeis">
+              <div className="papel-titulo">
+                <i className="pi pi-cog" /> Papeis
+              </div>
+              <div>
+                {papeis.map(p => (
+                  <div
+                    key={p.cdPapel}
+                    className={`papel ${
+                      p.cdPapel == papelAtivo ? "ativo" : ""
+                    }`}
+                    onClick={e => this.handlePapelClick(p.cdPapel, e)}
+                  >
+                    <div>
                       <div className="nome">
-                        <span>{p.nome}</span>
+                        <span>
+                          <i className="pi pi-key" />
+                          {p.nome}
+                        </span>
                       </div>
                       <div className="descricao">
                         <span>{p.descricao}</span>
                       </div>
                     </div>
-                  ))}
-                </div>
+                    <i className="pi pi-chevron-right" />
+                  </div>
+                ))}
               </div>
+            </div>
+            <div className="fluid-content">
               <div className="permissoes">
-                <h2>Permissões</h2>
+                <div>Permissões</div>
                 {papeis
                   .filter(p => p.cdPapel === papelAtivo)
                   .map(p =>
                     p.permissoes.map(perm => (
                       <Permissao
+                        key={perm.cdPerm}
                         permissao={perm.cdPerm}
                         usuario={perm.chave}
                         uor={perm.uor}
