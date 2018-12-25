@@ -5,7 +5,7 @@ import entities.Aplicacao;
 import jdbc.DB;
 import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
 import org.glassfish.jersey.media.multipart.FormDataParam;
-import repository.AplicacaoRepository;
+import repository.acesso.AplicacaoRepository;
 import repository.Jpa;
 
 import javax.inject.Inject;

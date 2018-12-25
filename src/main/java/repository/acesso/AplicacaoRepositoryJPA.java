@@ -1,7 +1,8 @@
-package repository;
+package repository.acesso;
 
 import entities.Aplicacao;
 import jdbc.CondicaoWhere;
+import repository.Jpa;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;

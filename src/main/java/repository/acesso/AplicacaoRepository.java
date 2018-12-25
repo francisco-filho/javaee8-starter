@@ -1,6 +1,7 @@
-package repository;
+package repository.acesso;
 
 import entities.Aplicacao;
+import repository.Repository;
 
 import javax.transaction.Transactional;
 
