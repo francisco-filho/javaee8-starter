@@ -1,7 +1,6 @@
 package repository;
 
 import entities.Aplicacao;
-import jdbc.Condicao;
 import jdbc.CondicaoWhere;
 
 import javax.enterprise.context.ApplicationScoped;
@@ -9,14 +8,9 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Predicate;
-import javax.persistence.criteria.Root;
-import java.util.ArrayList;
 import java.util.List;
 
-@JPA
+@Jpa
 @Named
 @ApplicationScoped
 public class AplicacaoRepositoryJPA implements AplicacaoRepository{
@@ -41,7 +35,8 @@ public class AplicacaoRepositoryJPA implements AplicacaoRepository{
 
     @Override
     public void update(Aplicacao value) {
-        em.persist(value);
+        Aplicacao app = em.find(Aplicacao.class, value.getId());
+        em.merge(value);
     }
 
     @Override

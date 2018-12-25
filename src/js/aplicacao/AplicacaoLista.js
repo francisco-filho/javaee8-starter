@@ -5,6 +5,7 @@ import { Column } from "primereact/column";
 import { navigate } from "@reach/router";
 import { Button } from "primereact/button";
 import AreaTitulo from "../componentes/AreaTitulo";
+import { contexto } from "../App";
 
 export default class AplicacaoLista extends Component {
   state = {
@@ -12,7 +13,7 @@ export default class AplicacaoLista extends Component {
   };
 
   componentDidMount() {
-    get("/javaee8/api/acesso/app").then(apps => {
+    get(contexto("/api/acesso/app")).then(apps => {
       this.setState({ apps });
     });
   }
@@ -22,16 +23,19 @@ export default class AplicacaoLista extends Component {
     return (
       <div>
         <AreaTitulo titulo="Aplicações">
-          <Button label="Nova aplicação" />
+          <Button
+            label="Nova aplicação"
+            onClick={e => navigate(contexto("/acesso/app/novo"))}
+          />
         </AreaTitulo>
         <div className="content">
           <DataTable
             value={apps}
             selectionMode="single"
             onSelectionChange={e => {
-              navigate(`/javaee8/acesso/app/${e.value.id}`);
+              navigate(contexto(`/acesso/app/${e.value.id}`));
             }}
-            rows={5}
+            rows={15}
             rowsPerPageOptions={[5, 10, 15]}
             paginator={true}
           >
@@ -39,15 +43,17 @@ export default class AplicacaoLista extends Component {
               field="id"
               header="Id"
               style={{ width: "60px" }}
+              filter={true}
               sortable={true}
             />
             <Column
               field="nome"
               header="Nome"
               style={{ width: "200px" }}
+              filter={true}
               sortable={true}
             />
-            <Column field="descricao" header="Descrição" />
+            <Column field="descricao" header="Descrição" filter={true} />
           </DataTable>
         </div>
       </div>

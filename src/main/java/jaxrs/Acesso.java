@@ -6,9 +6,10 @@ import jdbc.DB;
 import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
 import org.glassfish.jersey.media.multipart.FormDataParam;
 import repository.AplicacaoRepository;
-import repository.JPA;
+import repository.Jpa;
 
 import javax.inject.Inject;
+import javax.transaction.Transactional;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -20,11 +21,12 @@ import java.util.Map;
 import java.util.logging.Logger;
 
 @Path("/acesso")
+@Transactional
 public class Acesso {
 
     private Logger log = Logger.getLogger(this.getClass().getName());
 
-    @Inject @JPA
+    @Inject @Jpa
     AplicacaoRepository apps;
 
     @Inject
@@ -88,14 +90,14 @@ public class Acesso {
     public Response newApp(Aplicacao app) {
         Aplicacao created = apps.add(app);
         URI uri = URI.create("/javaee8/api/acesso/app/" + created.getId());
-        return Response.created(uri).build();
+        return Response.ok(created).build();
     }
 
     @PUT
     @Path("/app/{id}")
     public Response updateApp(Aplicacao app, @PathParam("id") Integer id) {
         apps.update(app);
-        return Response.ok().build();
+        return Response.ok(app).build();
     }
 
     @DELETE

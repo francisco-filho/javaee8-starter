@@ -14,7 +14,7 @@ import java.util.Map;
 import java.util.Optional;
 
 @Named
-@JDBC
+@Jdbc
 @ApplicationScoped
 public class AplicacaoRepositoryJdbc implements AplicacaoRepository {
 

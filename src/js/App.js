@@ -29,12 +29,13 @@ export default class App extends React.Component {
       <div>
         <BarraNavegacao sistema="Sistema de Controle de Acessos" />
         <div style={{ display: "none" }}>
-          <Link to="/javaee8/">Index</Link>
+          <Link to="/javaee8/acesso">Index</Link>
           <Link to="/javaee8/acesso/app/1">app 1</Link>
           <Link to="/javaee8/detalhes/93829">Detalhes</Link>
         </div>
         <Router basepath="/javaee8">
-          <AplicacaoLista path="/" />
+          <AplicacaoLista path="/acesso" />
+          <AplicacaoForm path="/acesso/app/novo" />
           <AplicacaoForm path="/acesso/app/:id" />
           <MyIndex path="/myindex" usuario={this.props.usuario} />
           <Detalhe path="/detalhes/:itemId/*" usuario={this.props.usuario} />

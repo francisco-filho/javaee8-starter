@@ -8,7 +8,8 @@ import javax.persistence.*;
 @JsonbPropertyOrder({"id", "nome", "descricao"})
 public class Aplicacao {
     @Id
-    @GeneratedValue
+    @SequenceGenerator(name = "db2acs.appl_cd_appl_seq", sequenceName = "db2acs.appl_cd_appl_seq", allocationSize = 1)
+    @GeneratedValue(generator = "db2acs.appl_cd_appl_seq", strategy = GenerationType.IDENTITY)
     @Column(name = "CD_APPL")
     private Integer id;
     @Column(name = "NM_APPL")
