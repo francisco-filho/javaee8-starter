@@ -120,12 +120,13 @@ export default class AplicacaoForm extends Component {
               </div>
               <div className="form-field">
                 {this.props.id && (
-                  <Button
-                    onClick={this.save}
-                    label="Permissões"
-                    className="p-button-success"
-                    icon="pi pi-key"
-                  />
+                  <Link to={contexto(`/acesso/app/${this.props.id}/papel`)}>
+                    <Button
+                      label="Permissões"
+                      className="p-button-success"
+                      icon="pi pi-key"
+                    />
+                  </Link>
                 )}
               </div>
             </form>

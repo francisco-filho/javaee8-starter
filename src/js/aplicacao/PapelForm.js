@@ -8,6 +8,11 @@ import { Link, navigate } from "@reach/router";
 import { Dialog } from "primereact/dialog";
 import { InputText } from "primereact/inputtext";
 import { InputTextarea } from "primereact/inputtextarea";
+import "./PapelForm.scss";
+import Permissao from "../componentes/Permissao";
+
+const success = (grow, msg) => grow.show({ severity: "success", detail: msg });
+const error = (grow, msg) => grow.show({ severity: "error", detail: msg });
 
 export default class PapelForm extends Component {
   state = {
@@ -42,10 +47,7 @@ export default class PapelForm extends Component {
       put(contexto(`/api/acesso/app/${appId}/papel`), {
         body: { ...papelAtivo, cdApp: appId }
       }).then(resp => {
-        this.growl.show({
-          severity: "success",
-          detail: "Papel alterado"
-        });
+        success(this.growl, "Papel salvo");
         this.setState({ visible: false });
       });
     } else {
@@ -53,19 +55,12 @@ export default class PapelForm extends Component {
         body: { ...papelAtivo, cdApp: appId }
       })
         .then(resp => {
-          console.log("resp", resp);
-          this.growl.show({
-            severity: "success",
-            detail: "Papel salvo"
-          });
+          success(this.growl, "Papel salvo");
           this.setState({ visible: false });
         })
         .catch(e => {
           this.setState({ visible: false });
-          this.growl.show({
-            severity: "error",
-            detail: "erro ao salvar papel"
-          });
+          error(this.growl, "Erro ao salvar Papel");
         });
     }
   };
@@ -76,7 +71,7 @@ export default class PapelForm extends Component {
 
   componentDidMount() {
     const appId = this.props.id;
-    this.setState({ loading: false, appId });
+    this.setState({ appId });
 
     get(contexto(`/api/acesso/app/${appId}`)).then(app =>
       this.setState({ app })
@@ -116,19 +111,13 @@ export default class PapelForm extends Component {
             style={{ width: "50vw" }}
             modal={true}
             footer={footer}
-            onShow={e => {
-              let i = document.querySelector(".p-dialog input");
-              console.log("input", i);
-              i.focus();
-            }}
             onHide={e => this.setState({ visible: false })}
           >
             <form>
               <div className="form-field">
                 <label>Nome do Papel</label>
                 <InputText
-                  autoFocus
-                  disabled
+                  disabled={papelAtivo.cdPapel}
                   type="text"
                   onChange={this.handleNameChange}
                   value={papelAtivo.nome}
@@ -243,32 +232,6 @@ export default class PapelForm extends Component {
           </div>
         </div>
       )
-    );
-  }
-}
-
-class Permissao extends React.Component {
-  render() {
-    const { permissao, usuario, uor, uorPosicao, nivel } = this.props;
-    return (
-      <div className="permissao">
-        <div>
-          {/*<div className="label">Usuário</div>*/}
-          <div>{usuario}</div>
-        </div>
-        <div>
-          {/*<div className="label">Nivel Organizacional</div>*/}
-          <div>{nivel}</div>
-        </div>
-        <div>
-          {/*<div className="label">UOR</div>*/}
-          <div>{uor}</div>
-        </div>
-        <div>
-          {/*<div className="label">UOR Posição</div>*/}
-          <div>{uorPosicao}</div>
-        </div>
-      </div>
     );
   }
 }
