@@ -64,16 +64,20 @@ body {
 }
 
 .titulo-area {
+  display: block;
   background-color: #f4f4f4;
   background-color: rgb(248, 249, 250);
   border-bottom: 1px solid #ccc;
   padding: 10px;
   margin-bottom: 10px;
   box-shadow: 0 0 4px 0px #ccc;
-
-  h1{
+  &>div {
+    display: flex;
     width: 1000px;
     margin: 0 auto;
+  }
+
+  h1{
     font-size: 24px;
     font-weight: normal;
   }

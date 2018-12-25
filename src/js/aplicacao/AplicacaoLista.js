@@ -21,7 +21,10 @@ export default class AplicacaoLista extends Component {
     return (
       <div>
         <div className="titulo-area">
-          <h1>Aplicações</h1>
+          <div>
+            <h1>Aplicações</h1>
+            <Button label="Nova aplicação" />
+          </div>
         </div>
         <div className="content">
           <DataTable
