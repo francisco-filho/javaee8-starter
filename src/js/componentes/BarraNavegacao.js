@@ -23,7 +23,7 @@ export default class BarraNavegacao extends React.Component {
         <DivisorVertical />
         <PerfilNavegacao
           chave="foto-nova.jpg"
-          nome="Francisco Filho"
+          nome="FRANCISCO FILHO"
           cargo="Ass. Empresarial"
         />
       </nav>

@@ -9,7 +9,7 @@ import java.util.List;
 @Cacheable(false)
 public class Papel {
     @Id
-    @SequenceGenerator(name="papl_seq", sequenceName = "db2acs.papl_cd_papl_seq")
+    @SequenceGenerator(name="papl_seq", sequenceName = "db2acs.papl_cd_papl_seq", allocationSize = 1)
     @GeneratedValue(generator = "papl_seq", strategy = GenerationType.SEQUENCE)
     @Column(name="cd_papl")
     private Integer cdPapel;

@@ -11,6 +11,7 @@ import repository.acesso.AplicacaoRepository;
 import repository.Jpa;
 import repository.acesso.PapelRepository;
 
+import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 import javax.transaction.Transactional;
 import javax.ws.rs.*;
@@ -116,7 +117,6 @@ public class Acesso {
      */
     @GET
     @Path("/app/{id}/papel")
-    @Transactional
     public Response getPapeis(@PathParam("id") Integer id){
         CondicaoWhere condicao = CondicaoWhere.builder()
                 .with("cdApp", id)
@@ -124,5 +124,20 @@ public class Acesso {
 
         List<Papel> p = papeis.query(condicao);
         return Response.ok(p).build();
+    }
+
+    @POST
+    @Path("/app/{id}/papel")
+    public Response postPapel(Papel papel){
+        papeis.add(papel);
+        papel.setPermissoes(null);
+        return Response.ok(papel).build();
+    }
+
+    @PUT
+    @Path("/app/{id}/papel")
+    public Response putPapel(Papel papel, @PathParam("id") Integer id) {
+        papeis.update(papel);
+        return Response.ok(papel).build();
     }
 }

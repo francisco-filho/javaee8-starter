@@ -6,54 +6,87 @@ import { contexto } from "../App";
 import { Growl } from "primereact/growl";
 import { Link, navigate } from "@reach/router";
 import { Dialog } from "primereact/dialog";
+import { InputText } from "primereact/inputtext";
+import { InputTextarea } from "primereact/inputtextarea";
 
 export default class PapelForm extends Component {
   state = {
+    app: {},
     loading: true,
     papeis: [],
-    papelAtivo: 0,
-    visible: false
+    papelAtivo: { nome: "", descricao: "" },
+    visible: false,
+    appId: 0
   };
   handlePapelClick = (cdPapel, e) => {
     this.setState({ papelAtivo: cdPapel });
   };
 
-  onHandleNameChange = e => {
-    const app = this.state.app;
-    this.setState({ app: { ...app, nome: e.target.value } });
+  handleNameChange = e => {
+    let papelAtivo = this.state.papelAtivo;
+    this.setState({ papelAtivo: { ...papelAtivo, nome: e.target.value } });
+  };
+
+  handleDescriptionChange = e => {
+    let papelAtivo = this.state.papelAtivo;
+    this.setState({ papelAtivo: { ...papelAtivo, descricao: e.target.value } });
+  };
+
+  editPapel = () => {
+    this.setState({ visible: true });
   };
 
   save = () => {
-    if (this.props.id) {
-      put(contexto(`/api/acesso/app/${this.props.id}`), {
-        body: this.state.app
+    const { papelAtivo, appId } = this.state;
+    if (papelAtivo.cdPapel) {
+      put(contexto(`/api/acesso/app/${appId}/papel`), {
+        body: { ...papelAtivo, cdApp: appId }
       }).then(resp => {
         this.growl.show({
           severity: "success",
-          detail: "Aplicação alterada"
+          detail: "Papel alterado"
         });
+        this.setState({ visible: false });
       });
     } else {
-      post(contexto("/api/acesso/app"), { body: this.state.app }).then(resp => {
-        this.growl.show({
-          severity: "success",
-          detail: "Aplicação salva"
+      post(contexto(`/api/acesso/app/${appId}/papel`), {
+        body: { ...papelAtivo, cdApp: appId }
+      })
+        .then(resp => {
+          console.log("resp", resp);
+          this.growl.show({
+            severity: "success",
+            detail: "Papel salvo"
+          });
+          this.setState({ visible: false });
+        })
+        .catch(e => {
+          this.setState({ visible: false });
+          this.growl.show({
+            severity: "error",
+            detail: "erro ao salvar papel"
+          });
         });
-        navigate(contexto(`/acesso/app/${resp.id}`));
-      });
     }
   };
 
+  cancelPapel = () => {
+    this.setState({ visible: false, papelAtivo: this.state.papeis[0] });
+  };
+
   componentDidMount() {
-    if (!this.props.id) {
-      this.setState({ loading: false });
-      return;
-    }
-    get(contexto(`/api/acesso/app/${this.props.id}/papel`))
+    const appId = this.props.id;
+    this.setState({ loading: false, appId });
+
+    get(contexto(`/api/acesso/app/${appId}`)).then(app =>
+      this.setState({ app })
+    );
+
+    get(contexto(`/api/acesso/app/${appId}/papel`))
       .then(papeis => {
         this.setState({
           papeis,
-          papelAtivo: papeis[0].cdPapel,
+          papelAtivo: papeis[0],
           loading: false
         });
       })
@@ -61,28 +94,61 @@ export default class PapelForm extends Component {
   }
 
   render() {
-    const { papeis, papelAtivo, loading } = this.state;
+    const { papeis, papelAtivo, loading, app } = this.state;
+    const footer = (
+      <div>
+        <Button label="Sim" icon="pi pi-check" onClick={this.save} />
+        <Button
+          label="Não"
+          icon="pi pi-times"
+          onClick={this.cancelPapel}
+          className="p-button-secondary"
+        />
+      </div>
+    );
+
     return (
       !loading && (
         <div>
           <Dialog
-            header="Godfather I"
+            header="Edição de Papel"
             visible={this.state.visible}
             style={{ width: "50vw" }}
             modal={true}
+            footer={footer}
+            onShow={e => {
+              let i = document.querySelector(".p-dialog input");
+              console.log("input", i);
+              i.focus();
+            }}
             onHide={e => this.setState({ visible: false })}
           >
-            The story begins as Don Vito Corleone, the head of a New York Mafia
-            family, oversees his daughter's wedding. His beloved son Michael has
-            just come home from the war, but does not intend to become part of
-            his father's business. Through Michael's life the nature of the
-            family business becomes clear. The business of the family is just
-            like the head of the family, kind and benevolent to those who give
-            respect, but given to ruthless violence whenever anything stands
-            against the good of the family.
+            <form>
+              <div className="form-field">
+                <label>Nome do Papel</label>
+                <InputText
+                  autoFocus
+                  disabled
+                  type="text"
+                  onChange={this.handleNameChange}
+                  value={papelAtivo.nome}
+                />
+              </div>
+              <div className="form-field">
+                <label>Descrição do Papel</label>
+                <InputTextarea
+                  type="text"
+                  onChange={this.handleDescriptionChange}
+                  value={papelAtivo.descricao}
+                />
+              </div>
+            </form>
           </Dialog>
           <Growl ref={el => (this.growl = el)} />
-          <AreaTitulo titulo="Papeis e Permissões" fluida={true}>
+          <AreaTitulo
+            titulo={`Papeis e Permissões - ${app.nome}`}
+            fluida={true}
+          >
             <Link to={contexto("/acesso")}>
               <Button
                 label="Voltar"
@@ -97,9 +163,15 @@ export default class PapelForm extends Component {
                   <i className="pi pi-cog" /> Papeis
                 </span>
                 <Button
+                  tooltip="Adicionar novo papel"
                   icon="pi pi-plus"
                   className="p-button-primary p-button-raised"
-                  onClick={e => this.setState({ visible: true })}
+                  onClick={e =>
+                    this.setState({
+                      visible: true,
+                      papelAtivo: { nome: "", descricao: "" }
+                    })
+                  }
                 />
               </div>
               <div className="lista-papeis">
@@ -107,14 +179,16 @@ export default class PapelForm extends Component {
                   <div
                     key={p.cdPapel}
                     className={`papel ${
-                      p.cdPapel == papelAtivo ? "ativo" : ""
+                      p.cdPapel == papelAtivo.cdPapel ? "ativo" : ""
                     }`}
-                    onClick={e => this.handlePapelClick(p.cdPapel, e)}
+                    onClick={e => this.handlePapelClick(p, e)}
                   >
                     <div>
                       <div className="nome">
-                        <i className="pi pi-key" />
-                        <span>{p.nome}</span>
+                        <a onClick={this.editPapel}>
+                          <i className="pi pi-pencil" />
+                        </a>
+                        <span style={{ flex: 1 }}>{p.nome}</span>
                       </div>
                       <div className="descricao">
                         <span>{p.descricao}</span>
@@ -127,14 +201,36 @@ export default class PapelForm extends Component {
             </div>
             <div className="fluid-content">
               <div className="permissoes">
-                <div>Permissões</div>
+                <div className="permissao-titulo">
+                  <span>
+                    <i className="pi pi-key" /> Permissões para{" "}
+                    {papelAtivo.nome}
+                  </span>
+                  <Button
+                    tooltip="Adicionar permissão"
+                    icon="pi pi-plus"
+                    className="p-button-primary p-button-raised p-button-rounded"
+                    onClick={e =>
+                      this.setState({
+                        visible: true,
+                        papelAtivo: { nome: "", descricao: "" }
+                      })
+                    }
+                  />
+                </div>
+                <header>
+                  <div className="label">Usuário</div>
+                  <div className="label">Nível organizacional</div>
+                  <div className="label">Uor</div>
+                  <div className="label">Uor posição</div>
+                </header>
                 {papeis
-                  .filter(p => p.cdPapel === papelAtivo)
+                  .filter(p => p.cdPapel === papelAtivo.cdPapel)
                   .map(p =>
                     p.permissoes.map(perm => (
                       <Permissao
-                        key={perm.cdPerm}
-                        permissao={perm.cdPerm}
+                        key={perm.cdPermissao}
+                        permissao={perm.cdPermissao}
                         usuario={perm.chave}
                         uor={perm.uor}
                         uorPosicao={perm.uorPsc}
@@ -156,11 +252,22 @@ class Permissao extends React.Component {
     const { permissao, usuario, uor, uorPosicao, nivel } = this.props;
     return (
       <div className="permissao">
-        <div>{permissao}</div>
-        <div>{usuario}</div>
-        <div>{nivel}</div>
-        <div>{uor}</div>
-        <div>{uorPosicao}</div>
+        <div>
+          {/*<div className="label">Usuário</div>*/}
+          <div>{usuario}</div>
+        </div>
+        <div>
+          {/*<div className="label">Nivel Organizacional</div>*/}
+          <div>{nivel}</div>
+        </div>
+        <div>
+          {/*<div className="label">UOR</div>*/}
+          <div>{uor}</div>
+        </div>
+        <div>
+          {/*<div className="label">UOR Posição</div>*/}
+          <div>{uorPosicao}</div>
+        </div>
       </div>
     );
   }
