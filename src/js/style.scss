@@ -23,36 +23,6 @@ body {
     font-size: 24px;
   }
 
-  #main-nav {
-    display: flex;
-    justify-content: space-between;
-    background-color: #fff;
-    color: #444;
-    border-bottom: 1px solid #ccc;
-    box-shadow: 0 0 4px 0px #ccc;
-
-    .logo {
-      display: flex;
-      align-items: center;
-      font-family: Roboto;
-      font-weight: 100;
-      img {
-        margin: 8px;
-        width: 32px;
-        height: 32px;
-      }
-      h1 {
-        font-size: 24px;
-      }
-    }
-
-    .titulo-app {
-      display: flex;
-      align-items: center;
-      font-size: 24px;
-    }
-
-  }
 }
 
 .content {
@@ -63,29 +33,6 @@ body {
   box-shadow: 0 0 0 1px rgba(61,70,79,.05), 0 1px 3px 0 rgba(61,70,79,.15)
 }
 
-.titulo-area {
-  background-color: #f4f4f4;
-  background-color: rgb(248, 249, 250);
-  border-bottom: 1px solid #ccc;
-  padding: 8px;
-  margin-bottom: 10px;
-  box-shadow: 0 0 4px 0px #ccc;
-  &>div {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    width: 1000px;
-    margin: 0 auto;
-  }
-
-  h1{
-    font-size: 24px;
-    font-weight: normal;
-  }
-  button {
-    margin-left: 4px;
-  }
-}
 
 
 body .content .p-datatable .p-datatable-thead>tr{

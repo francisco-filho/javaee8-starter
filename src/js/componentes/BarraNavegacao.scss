@@ -1,0 +1,30 @@
+#main-nav {
+  display: flex;
+  justify-content: space-between;
+  background-color: #fff;
+  color: #444;
+  border-bottom: 1px solid #ccc;
+  box-shadow: 0 0 4px 0px #ccc;
+
+  .logo {
+    display: flex;
+    align-items: center;
+    font-family: Roboto;
+    font-weight: 100;
+    cursor: pointer;
+    img {
+      margin: 8px;
+      width: 32px;
+      height: 32px;
+    }
+    h1 {
+      font-size: 24px;
+    }
+  }
+
+  .titulo-app {
+    display: flex;
+    align-items: center;
+    font-size: 24px;
+  }
+}

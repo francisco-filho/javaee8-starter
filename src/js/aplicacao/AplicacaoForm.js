@@ -61,12 +61,12 @@ export default class AplicacaoForm extends Component {
       !loading && (
         <div>
           <AreaTitulo titulo="Editar aplicação">
-            <Button onClick={this.save} label="Salvar" />
             <Button
               onClick={this.save}
               label="Cancelar"
               className="p-button-secondary p-button-raised"
             />
+            <Button onClick={this.save} label="Salvar" icon="pi pi-check" />
           </AreaTitulo>
           <div className="content">
             <form>

@@ -1,0 +1,23 @@
+.titulo-area {
+  background-color: #f4f4f4;
+  background-color: rgb(248, 249, 250);
+  border-bottom: 1px solid #ccc;
+  padding: 8px;
+  margin-bottom: 10px;
+  box-shadow: 0 0 4px 0px #ccc;
+  &>div {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 1000px;
+    margin: 0 auto;
+  }
+
+  h1{
+    font-size: 24px;
+    font-weight: normal;
+  }
+  button.p-button {
+    margin-left: 8px;
+  }
+}
