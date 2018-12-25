@@ -94,6 +94,14 @@ export default class AplicacaoForm extends Component {
                   value={app.file}
                 />
               </div>
+              <div className="form-field">
+                <Button
+                  onClick={this.save}
+                  label="Permissões"
+                  className="p-button-success"
+                  icon="pi pi-key"
+                />
+              </div>
             </form>
           </div>
         </div>
