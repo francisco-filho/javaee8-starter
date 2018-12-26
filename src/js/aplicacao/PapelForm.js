@@ -152,26 +152,12 @@ export default class PapelForm extends Component {
               </div>
               <div className="lista-papeis">
                 {papeis.map(p => (
-                  <div
-                    key={p.cdPapel}
-                    className={`papel ${
-                      p.cdPapel == papelAtivo.cdPapel ? "ativo" : ""
-                    }`}
-                    onClick={e => this.handlePapelClick(p, e)}
-                  >
-                    <div>
-                      <div className="nome">
-                        <a onClick={this.editPapel}>
-                          <i className="pi pi-pencil" />
-                        </a>
-                        <span style={{ flex: 1 }}>{p.nome}</span>
-                      </div>
-                      <div className="descricao">
-                        <span>{p.descricao}</span>
-                      </div>
-                    </div>
-                    <i className="pi pi-chevron-right" />
-                  </div>
+                  <ItemComponente
+                    item={p}
+                    isActive={p.cdPapel === papelAtivo.cdPapel}
+                    onSelect={this.handlePapelClick}
+                    onEdit={this.editPapel}
+                  />
                 ))}
               </div>
             </div>
@@ -250,4 +236,24 @@ const PermissaoHeader = () => (
     <div className="label">Uor</div>
     <div className="label">Uor posição</div>
   </header>
+);
+
+const ItemComponente = ({ item, onSelect, onEdit, isActive }) => (
+  <div
+    className={`item-componente ${isActive ? "ativo" : ""}`}
+    onClick={e => onSelect(item, e)}
+  >
+    <div>
+      <div className="nome">
+        <a onClick={onEdit}>
+          <i className="pi pi-pencil" />
+        </a>
+        <span style={{ flex: 1 }}>{item.nome}</span>
+      </div>
+      <div className="descricao">
+        <span>{item.descricao}</span>
+      </div>
+    </div>
+    <i className="pi pi-chevron-right" />
+  </div>
 );
