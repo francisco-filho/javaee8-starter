@@ -6,6 +6,7 @@ import javax.persistence.*;
 @Entity
 @Table(schema = "DB2ACS", name = "APPL")
 @JsonbPropertyOrder({"id", "nome", "descricao"})
+@Cacheable(false)
 public class Aplicacao {
     @Id
     @SequenceGenerator(name = "db2acs.appl_cd_appl_seq", sequenceName = "db2acs.appl_cd_appl_seq", allocationSize = 1)

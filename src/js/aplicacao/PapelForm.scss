@@ -1,7 +1,6 @@
 .papeis {
   width: 300px;
   background-color: #f8f9fa;
-  font-size: 12px;
   border-right: 1px solid #ddd;
 
   .lista-papeis {
@@ -43,6 +42,7 @@
       margin-bottom: 4px;
     }
     .descricao {
+      font-size: 12px;
       font-weight: normal;
       color: #222;
       padding-left: 15px;

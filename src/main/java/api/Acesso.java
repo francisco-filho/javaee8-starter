@@ -140,4 +140,15 @@ public class Acesso {
         papeis.update(papel);
         return Response.ok(papel).build();
     }
+
+    @GET
+    @Path("/app/teste")
+    public Response teste(){
+        Aplicacao app = apps.findOne(1);
+        app.setNome(app.getNome() + " -> ");
+        apps.update(app);
+
+        db.first("select * from db2acs.appl");
+        return Response.ok().build();
+    }
 }
