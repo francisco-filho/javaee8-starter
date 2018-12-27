@@ -1,0 +1,41 @@
+.item-row {
+  display: flex;
+  align-items: center;
+  background-color: #f8f9fa;
+  padding: 8px;
+  border-bottom: 1px solid #ddd;
+
+  &:hover {
+     background-color: #eee;
+    transition: background-color .2s;
+  }
+
+  .item-content {
+    flex: 1;
+    max-width: 600px;
+  }
+
+  .item-texto {
+    font-size: 14px;
+    font-weight: bold;
+    color: rgb(52, 108, 176);
+  }
+  .item-descricao {
+    font-size: 12px;
+    color: #000;
+  }
+  .item-dep {
+    flex: 1;
+    font-size: 12px;
+    margin-right: 10px;
+    max-width: 200px;
+  }
+  .item-detalhe {
+    font-size: 12px;
+  }
+  .item-children {
+    &>* {
+      margin-left: 8px;
+    }
+  }
+}

@@ -7,32 +7,39 @@ $primaryFontColor: #f8f8f8;
 $primaryBorderColor: rgb(22, 45, 75);
 
 #main-nav {
-  display: flex;
-  justify-content: space-between;
   background-color: $mainBackgroundColor;
   color: $primaryFontColor;
   border-bottom: 1px solid $primaryBorderColor;
   box-shadow: 0 0 4px 0px $primaryBorderColor;
 
-  .logo {
+  .nav-content {
     display: flex;
-    align-items: center;
-    font-family: Roboto;
-    font-weight: 100;
-    cursor: pointer;
-    img {
-      margin: 8px;
-      width: 32px;
-      height: 32px;
+    justify-content: space-between;
+    width: 980px;
+    margin: 0 auto;
+
+    .logo {
+      display: flex;
+      align-items: center;
+      font-family: Roboto;
+      font-weight: 100;
+      cursor: pointer;
+
+      img {
+        margin: 8px;
+        width: 32px;
+        height: 32px;
+      }
+
+      h1 {
+        font-size: 24px;
+      }
     }
-    h1 {
+
+    .titulo-app {
+      display: flex;
+      align-items: center;
       font-size: 24px;
     }
-  }
-
-  .titulo-app {
-    display: flex;
-    align-items: center;
-    font-size: 24px;
   }
 }

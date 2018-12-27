@@ -42,7 +42,7 @@ const webpackConfig = {
             loader: "file-loader",
             options: {
               name: "[name].[ext]",
-              outputPath: "fonts/"
+              outputPath: devMode ? "fonts/" : "/fonts/"
             }
           }
         ]
@@ -71,6 +71,11 @@ const webpackConfig = {
     }),
     new MiniCssExtractPlugin({
       filename: "[name].css"
+    }),
+    new webpack.DefinePlugin({
+      "process.env.NODE_ENV": devMode
+        ? JSON.stringify("development")
+        : JSON.stringify("production")
     })
   ],
   resolve: {

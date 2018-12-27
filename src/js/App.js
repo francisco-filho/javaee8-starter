@@ -9,6 +9,7 @@ import { TransitionGroup, CSSTransition } from "react-transition-group";
 import BarraNavegacao from "./componentes/BarraNavegacao";
 import "./style.scss";
 import PapelForm from "./aplicacao/PapelForm";
+import Componentes from "./Componentes";
 
 export const contexto = link => `/javaee8${link}`;
 
@@ -35,6 +36,11 @@ export default class App extends React.Component {
           <Link to="/javaee8/detalhes/93829">Detalhes</Link>
         </div>
         <Router basepath="/javaee8">
+          <Componentes
+            path="/"
+            texto="hello world"
+            descricao="loren ipsum dornes abc afefefe"
+          />
           <AplicacaoLista path="/acesso" />
           <AplicacaoForm path="/acesso/app/novo" />
           <AplicacaoForm path="/acesso/app/:id" />
