@@ -1,13 +1,24 @@
+.p-tooltip.p-component {
+  z-index: 3;
+}
+
 .item-row {
   display: flex;
+  position: relative;
   align-items: center;
-  background-color: #f8f9fa;
+  background-color: #fff;
   padding: 8px;
-  border-bottom: 1px solid #ddd;
+  border: 1px solid #ddd;
+  border-top: none;
 
   &:hover {
-     background-color: #eee;
-    transition: background-color .2s;
+     //background-color: #eee;
+    //transition: background-color .2s;
+    z-index: 2;
+    box-shadow: 0 2px 4px #aaa;
+    border: 1px solid #eee;
+    border-top: none;
+    cursor: pointer;
   }
 
   .item-content {
@@ -35,7 +46,11 @@
   }
   .item-children {
     &>* {
-      margin-left: 8px;
+      //margin-left: 2px;
     }
+  }
+  button.p-button {
+    background-color: #fff;
+    border: 1px solid #fff;
   }
 }
